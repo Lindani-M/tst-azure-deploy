@@ -1,0 +1,17 @@
+{
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/assets/*", "/redirect.html", "/*.{png,ico,svg,json}"]
+  },
+  "routes": [
+    {
+      "route": "/redirect.html",
+      "headers": { "Cache-Control": "no-store" }
+    }
+  ],
+  "globalHeaders": {
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "X-Frame-Options": "DENY"
+  }
+}

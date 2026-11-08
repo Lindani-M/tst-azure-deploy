@@ -1,0 +1,6 @@
+# Only the backend goes into the image. Never the .env or anything else.
+*
+!backend/
+backend/.venv/
+**/__pycache__/
+**/*.pyc

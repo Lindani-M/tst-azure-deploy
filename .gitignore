@@ -1,0 +1,16 @@
+# Secrets: never commit
+.env
+.env.*
+!.env.example
+set-secrets.sh
+
+# Node (frontend)
+node_modules/
+dist/
+
+# Python (backend)
+.venv/
+__pycache__/
+*.pyc
+
+*.log

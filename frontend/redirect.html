@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Signing in…</title>
+  </head>
+  <body>
+    <!--
+      MSAL v5 redirect bridge. Entra sends the user back here after sign-in;
+      this hands the result to the app and returns to the page that started sign-in.
+      Must match the redirect URI registered in Entra exactly, e.g. http://localhost:5243/redirect.html
+    -->
+    <script type="module">
+      import { broadcastResponseToMainFrame } from '@azure/msal-browser/redirect-bridge';
+      broadcastResponseToMainFrame().catch((error) => {
+        console.error('MSAL redirect bridge error:', error);
+        document.body.textContent = 'Sign-in could not be completed. Go back to the app and try again.';
+      });
+    </script>
+  </body>
+</html>
