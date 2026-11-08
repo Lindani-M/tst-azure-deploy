@@ -8,6 +8,7 @@ A small Notes app for learning real customer sign-up on Azure, end to end.
 - **Data:** Azure Cosmos DB (`tst-cosmos-db`, South Africa North). The backend signs in to Cosmos with a service principal through Entra ID, so it uses no account keys. Notes are stored under each user's Entra ID.
 
 **Full setup** (Cosmos, the external tenant, the app registration, branding, local run, deployment, the problems we hit and fixes): [`docs/SETUP.md`](docs/SETUP.md).
+**Architecture diagram and monthly cost per service:** [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
 ## Run locally
 
