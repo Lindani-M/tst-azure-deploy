@@ -8,10 +8,27 @@ import './styles.css';
 
 const root = createRoot(document.getElementById('root'));
 
+// Shown straight away: the backend scales to zero when idle, so the first request can take a few seconds.
+function Loading() {
+  return (
+    <main className="auth-screen">
+      <section className="auth-card">
+        <p className="subtitle">Loading…</p>
+      </section>
+    </main>
+  );
+}
+root.render(<Loading />);
+
 async function start() {
   // Client ID, authority and scope come from the backend, so only the backend URL is baked into the build.
-  const res = await fetch(`${API_BASE}/api/config`);
-  if (!res.ok) throw new Error(`Could not load sign-in settings from ${API_BASE || ''}/api/config (${res.status}). Is the backend running?`);
+  let res;
+  try {
+    res = await fetch(`${API_BASE}/api/config`, { signal: AbortSignal.timeout(45_000) });
+  } catch {
+    throw new Error('The server is taking too long to respond. Please refresh the page in a moment.');
+  }
+  if (!res.ok) throw new Error(`Could not load sign-in settings (${res.status}). Please refresh the page in a moment.`);
   const config = await res.json();
 
   const msal = new PublicClientApplication({
@@ -55,9 +72,11 @@ async function start() {
 start().catch((err) => {
   console.error(err);
   root.render(
-    <main className="page">
-      <h1>Notes Test App</h1>
-      <p className="error">Could not start sign-in: {err.errorCode || err.message}</p>
+    <main className="auth-screen">
+      <section className="auth-card">
+        <h1>Notes</h1>
+        <p className="error">{err.errorCode || err.message}</p>
+      </section>
     </main>,
   );
 });
