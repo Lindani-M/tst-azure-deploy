@@ -46,6 +46,10 @@ function SignIn({ scopes }) {
   async function start(prompt) {
     setError('');
     try {
+      // MSAL turns a leftover "active account" into a login hint, and Entra then pre-fills the
+      // customer's internal <guid>@<tenant>.onmicrosoft.com username instead of their email.
+      // Nobody is signed in on this screen, so clear it and let the user type their email.
+      instance.setActiveAccount(null);
       await instance.loginRedirect({ scopes, ...(prompt ? { prompt } : {}) });
     } catch (err) {
       setError(err.errorCode || err.message);
